@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProyectoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,3 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+//rutas para el crud
+Route::get('proyectos/reportPDF', [ProyectoController::class, 'report'])->name('proyectos.report');
+Route::resource('proyectos', ProyectoController::class);
