@@ -29,15 +29,33 @@
                     <td>
                         <!-- <a href="{{ route('proyectos.show', $proyecto) }}" class="btn btn-sm btn-info">Ver</a> -->
                         <a href="{{ route('proyectos.edit', $proyecto) }}" class="btn btn-sm btn-success">Editar</a>
-                        <form action="{{ route('proyectos.destroy', $proyecto) }}" method="POST" style="display:inline;">
+                        <form id="delete-form-{{ $proyecto->id }}" action="{{ route('proyectos.destroy', $proyecto->id) }}" method="POST" style="display:inline;">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-sm btn-danger">Eliminar</button>
+                            <button onclick="confirmarEliminar({{$proyecto->id}}, '{{$proyecto->nombreProyecto}}')" type="button" class="btn btn-sm btn-danger">Eliminar</button>
                         </form>
                     </td>
                 </tr>
             @endforeach
         </tbody>
     </table>
+    <script>
+        function confirmarEliminar(id, nombre) {
+            Swal.fire({
+                title: '¿Estás seguro?',
+                html: "Estás a punto de eliminar el proyecto: <strong><br>" + id + '-' + nombre +"</strong>",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, eliminar!',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('delete-form-' + id).submit();
+                }
+            });
+        }
+    </script>
 @endsection
 

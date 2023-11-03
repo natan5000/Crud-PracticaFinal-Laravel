@@ -75,4 +75,10 @@ class ProyectoController extends Controller
         ]);
         return $pdf->stream($nameFile);
     }
+
+    public function destroy(Proyecto $proyecto)
+    {
+        $proyecto->delete();
+        return redirect()->route('proyectos.index')->with('success', 'Proyecto eliminado exitosamente');
+    }
 }
